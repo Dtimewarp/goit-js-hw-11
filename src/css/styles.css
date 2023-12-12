@@ -180,55 +180,30 @@ input:focus {
 }
 
 /* loader */
-.loader {
-  width: 48px;
-  height: 48px;
+.loader{
+  font-size: 48px;
+  color: #FFF;
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
   position: relative;
 }
-.loader::before , .loader::after{
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50% , -50%);
-  width: 48em;
-  height: 48em;
-  background-image:
-    radial-gradient(circle 10px, #FFF 100%, transparent 0),
-    radial-gradient(circle 10px, #FFF 100%, transparent 0),
-    radial-gradient(circle 10px, #FFF 100%, transparent 0),
-    radial-gradient(circle 10px, #FFF 100%, transparent 0),
-    radial-gradient(circle 10px, #FFF 100%, transparent 0),
-    radial-gradient(circle 10px, #FFF 100%, transparent 0),
-    radial-gradient(circle 10px, #FFF 100%, transparent 0),
-    radial-gradient(circle 10px, #FFF 100%, transparent 0);
-  background-position: 0em -18em, 0em 18em, 18em 0em, -18em 0em,
-                       13em -13em, -13em -13em, 13em 13em, -13em 13em;
-    background-repeat: no-repeat;
-  font-size: 0.5px;
-  border-radius: 50%;
-  animation: blast 1s ease-in infinite;
+.loader:after{
+  content: 'Loading';
+  position: relative;
+  z-index: 5;
 }
-.loader::after {
-  font-size: 1px;
-  background: #fff;
-  animation: bounce 1s ease-in infinite;
+.loader:before{
+  content: '';
+  height: 6px;
+  border: 1px solid;
+  border-radius: 10px;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  background: linear-gradient(#FF3D00 100%, transparent 0) no-repeat;
+  background-size: 0% auto;
+  animation: 10s lineGrow linear infinite;
 }
 
-@keyframes bounce {
-  0% , 100%{ font-size: 0.75px }
-  50% { font-size: 1.5px }
-}
-@keyframes blast {
-  0% , 40% {
-    font-size: 0.5px;
-  }
-  70% {
-    opacity: 1;
-    font-size: 4px;
-  }
-   100% {
-     font-size: 6px;
-    opacity: 0;
-  }
-}
+@keyframes lineGrow {to {  background-size: 100% auto}}
