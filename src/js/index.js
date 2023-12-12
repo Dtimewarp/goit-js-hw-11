@@ -120,7 +120,6 @@ function pageScrolling() {
 }
 
 // Infinity scroll
-
 function infinityScroll() {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
   if (scrollTop + clientHeight >= scrollHeight - 5) {

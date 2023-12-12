@@ -13,8 +13,16 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: #f0ffff;
+  background-color: #050801;
 }
+/*  */
+
+
+
+  
+
+/*  */
+
 
   .header {
     position: fixed;
@@ -23,7 +31,7 @@ body {
     z-index: 20;
     width: 100vw;
     height: 4.0625rem;
-    background: #F0F8FF no-repeat fixed;
+    background: #050801 no-repeat fixed;
     border-bottom: 1px solid var(--border-tabs);
     box-shadow: 0px 2px 1px rgba(46, 47, 66, 0.08),
       0px 1px 1px rgba(46, 47, 66, 0.16), 0px 1px 6px rgba(46, 47, 66, 0.08);
@@ -31,6 +39,7 @@ body {
 
 .form-container {
   padding-top: 10px;
+  
 }
 
 .search-form {
@@ -48,24 +57,36 @@ body {
   font-size: 17px;
   padding-left: 10px;
   border: none;
-  border-radius: 7px;
+  border-radius: 10px;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
 
 
 .button-submit {
-  cursor: pointer;
-  font-size: 17px;
-  width: 100px;
-  height: 35px;
+  padding: 15px 30px;
+  background-color: #050801;
+  color: #03e9f4;
+  font-weight: bold;
   border: none;
-  color: #ffffff;
-  border-radius: 7px;
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-  background-color: #08b149;
+  border-radius: 5px;
+  letter-spacing: 4px;
+  overflow: hidden;
+  transition: 0.5s;
+  cursor: pointer;
+  text-transform: uppercase;
 }
+
+.button-submit:hover{
+  background: #03e9f4;
+  color: #050801;
+  box-shadow: 0 0 5px #03e9f4,
+              0 0 25px #03e9f4,
+              0 0 50px #03e9f4,
+              0 0 200px #03e9f4;
+   -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
 
 .load-more {
   margin: auto;
@@ -106,7 +127,7 @@ img {
   margin-top: 30px;
   padding-bottom: 20px;
   padding-top: 70px;
-  background-color: ;
+  
 }
 
 
@@ -114,10 +135,12 @@ img {
   display: block;
   width: 100%;
   height: 200px;
+  border-radius: 20px;
 }
 
 .photo-card {
-  background-color: #ffffff;
+  background-color: #rgba(0, 0, 0, 0);
+  color: white;
   border-radius: 7px;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
@@ -142,6 +165,10 @@ img {
 
 .gallery__link:hover {
   cursor: zoom-in;
+}
+
+input:focus {
+  outline: none;
 }
 
 .info {
