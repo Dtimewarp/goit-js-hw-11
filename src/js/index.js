@@ -20,7 +20,7 @@ const newsApiServer = new NewsApiServer();
 
 loader.classList.replace('loader', 'hidden');
 
-//Зчитуємо форму при сабміті
+//Зчитуємо інформацію з форми при сабміті
 function onSubmitForm(evt) {
   evt.preventDefault();
   window.scrollTo(0, 0);
@@ -31,16 +31,15 @@ function onSubmitForm(evt) {
     .toLowerCase()
     .split(' ')
     .join('+');
-  console.log(newsApiServer.searchQuery);
-
+  
   if (newsApiServer.searchQuery === '') {
-    return Notiflix.Notify.info('Please fill in the search field.');
+    return Notiflix.Notify.info('Будь ласка, введіть дані у поле пошуку');
   }
 
   fetchPhoto();
 }
 
-//фетч картинок і відображення
+//Запит картинок і їх відображення
 function fetchPhoto() {
   clearPage();
 
@@ -50,26 +49,36 @@ function fetchPhoto() {
       if (data.totalHits === 0) {
         clearPage();
         return Notiflix.Notify.failure(
-          'Sorry, there are no images matching your search query. Please try again.'
+          'Вибачте, але нічого не знайдено. Спробуйте ще раз.'
         );
       } else {
-        Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+        Notiflix.Notify.success(`Ми знайшли за вашим запитом ${data.totalHits} зображень.`);
 
-        window.addEventListener('scroll', infinityScroll);
+        newsApiServer.totalImgs += data.hits.length;
         
         appendPhotoMarkup(data);
         pageScrolling();
         lightbox.refresh();
 
-        newsApiServer.totalImgs += data.hits.length;
+        if (data.totalHits <= newsApiServer.totalImgs) {
+          Notiflix.Notify.info(
+            "Вибачте, але це кінець колекції за запитом."
+          );
+          window.removeEventListener('scroll', infinityScroll);
+          loader.classList.replace('loader', 'hidden');
+          totalImgs = 0;
+          return;
+        }
+
+        window.addEventListener('scroll', infinityScroll);
+
         console.log('data.hits', newsApiServer.totalImgs);
-        
       }
     })
     .catch(error => console.log(error.message));
 }
 
-//завантаження / перевірка коли користувач дійшов до кінця колекції
+//Перевірка наповнення коли юзер доскролив до кінця колекції фото
 // Load More
 function onLoadMore() {
   newsApiServer
@@ -80,11 +89,10 @@ function onLoadMore() {
       lightbox.refresh();
 
       newsApiServer.totalImgs += data.hits.length;
-      console.log('data.hits', newsApiServer.totalImgs);
-
+      
       if (data.totalHits <= newsApiServer.totalImgs) {
         Notiflix.Notify.info(
-          "We're sorry, but you've reached the end of search results."
+          "Вибачте, але це кінець колекції за запитом."
         );
         window.removeEventListener('scroll', infinityScroll);
         loader.classList.replace('loader', 'hidden');
@@ -94,7 +102,7 @@ function onLoadMore() {
     .catch(error => console.log(error.message));
 }
 
-//Функція додавання розмітки на сторінку
+//Відмальовування розмітки
 function appendPhotoMarkup(data) {
   galleryContainer.insertAdjacentHTML('beforeend', createMarkup(data.hits));
 }
@@ -107,7 +115,7 @@ function clearPage() {
   newsApiServer.totalImgs = 0;
 }
 
-//Функція плавного прокручування сторінки
+//Плавний скроллінг
 function pageScrolling() {
   const { height: cardHeight } = document
     .querySelector('.gallery')
@@ -120,6 +128,7 @@ function pageScrolling() {
 }
 
 // Infinity scroll
+
 function infinityScroll() {
   const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
   if (scrollTop + clientHeight >= scrollHeight - 5) {
@@ -128,4 +137,3 @@ function infinityScroll() {
 
   loader.classList.replace('hidden', 'loader');
 }
-
